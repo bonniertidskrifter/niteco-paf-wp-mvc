@@ -1,11 +1,7 @@
 {
-    "name": "tombenner/wp-mvc",
-    "description": "An MVC framework for WordPress http://wpmvc.org",
-    "type": "wordpress-plugin",
-    "dist": {
-      "url": "https://github.com/tombenner/wp-mvc.git",
-      "type": "git"
-    },
+    "type"        : "wordpress-plugin",
+    "name"        : "bonniertidskrifter/wp-mvc",
+    "description" : "An MVC framework for WordPress http://wpmvc.org",
     "license": "GPL",
     "authors": [
         {
