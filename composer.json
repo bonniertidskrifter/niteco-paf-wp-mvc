@@ -1,12 +1,10 @@
 {
-    "name": "tombenner/wp-mvc",
-    "description": "An MVC framework for WordPress http://wpmvc.org",
-    "type": "wordpress-plugin",
+    "type"        : "wordpress-plugin",
+    "name"        : "bonniertidskrifter/wp-mvc",
+    "description" : "An MVC framework for WordPress http://wpmvc.org",
     "license": "GPL",
     "authors": [
-        {
-            "name": "Tom Benner",
-            "email": "tombenner@gmail.com"
+
         }
     ]
 }
