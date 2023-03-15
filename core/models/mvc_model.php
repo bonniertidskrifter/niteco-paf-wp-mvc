@@ -19,7 +19,8 @@ class MvcModel {
     private $data_validator = null;
     protected $db_adapter = null;
     private $wp_post_adapter = null;
-    
+    protected static $describe_cache = array();
+
     function __construct() {
         
         global $wpdb;
@@ -34,7 +35,7 @@ class MvcModel {
             'model_name' => $this->name,
             'table' => $table,
             'table_reference' => empty($this->database) ? '`'.$table.'`' : '`'.$this->database.'`.`'.$table.'`',
-            'selects' => empty($this->selects) ? array('`'.$this->name.'`.*') : $this->default_selects,
+            'selects' => empty($this->selects) ? array('`'.$this->name.'`.*') : $this->selects,
             'order' => empty($this->order) ? null : $this->order,
             'joins' => empty($this->joins) ? null : $this->joins,
             'conditions' => empty($this->conditions) ? null : $this->conditions,
@@ -541,6 +542,11 @@ class MvcModel {
             if (!empty($error_arr) || !is_null($this->validation_error)) {
                 $this->validation_error = is_null($this->validation_error) ? $error_arr : array_merge($this->validation_error,$error_arr);
                 $this->validation_error_html = '';
+				if ( is_array($this->validation_error) && !empty($this->validation_error) ) {
+					foreach ( $this->validation_error as $error ) {
+						$this->validation_error_html .= $error->get_html();
+					}
+				}
                 $this->invalid_data = $data;
                 return $error_arr;
             }
@@ -672,10 +678,14 @@ class MvcModel {
     }
     
     protected function init_schema() {
-        $sql = '
-            DESCRIBE
-                '.$this->table_reference;
-        $results = $this->db_adapter->get_results($sql);
+        if ( isset( self::$describe_cache[ $this->table ] ) ) {
+            $results = self::$describe_cache[ $this->table ];
+        } else {
+            $results = $this->db_adapter->get_results(
+                "DESCRIBE {$this->table_reference}"
+            );
+            self::$describe_cache[ $this->table ] = $results;
+        }
         
         $schema = array();
         
