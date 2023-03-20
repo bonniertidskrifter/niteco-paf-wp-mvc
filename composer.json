@@ -4,7 +4,9 @@
     "description" : "An MVC framework for WordPress http://wpmvc.org",
     "license": "GPL",
     "authors": [
-
+        {
+            "name": "Tom Benner",
+            "email": "tombenner@gmail.com"
         }
     ]
 }
